@@ -1,13 +1,18 @@
 #!/usr/bin/env python
 import sys
+import json
 
 
 class PhlatSlave:
     def __init__(self, config_file_path):
-        self.config_file_path = config_file_path
+        with open(config_file_path) as config_file:
+            config = json.loads(config_file.read())
+            config_file.close()
+        self.node = config['node']
+        self.jobs_url = config['jobs'] + '/api/jobs/' + self.node
 
     def do_work(self):
-        print self.config_file_path
+        print self.jobs_url
 
 
 def main():
